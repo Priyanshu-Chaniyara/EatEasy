@@ -1,22 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 *{
-  padding: 0;
-  margin: 0;
+  padding:0px;
+  margin:0px;
   box-sizing: border-box;
   font-family: Outfit;
 }
-body
-{
-  min-height: 100vh;
-  background-color: #fcfcfc;
+body{
+  min-height:100vh;
+  background-color:#fcfcfc;
 }
 a{
-  text-decoration: none;
-  height: 1px;
-  background-color: #a9a9a9;
+  text-decoration:none;
+  color:inherit;
 }
-.app-content
-{
-  display: flex;
+hr{
+  border:none;
+  height:1px;
+  background-color:#a9a9a9;
+}
+.app-content{
+  display:flex;
+}
+.flex-col{
+  display:flex;
+  flex-direction:column;
+   gap:10px;
+}
+.cursor{
+  cursor:pointer;
 }
