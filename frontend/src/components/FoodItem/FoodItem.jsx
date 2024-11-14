@@ -13,6 +13,7 @@ const FoodItem = ({ id, name, price, description, image }) => {
 
   return (
     <div className="food-item">
+    <div className="food-item">
       <div className="food-item-img-container">
         <img
           className="food-item-image"
@@ -53,5 +54,8 @@ const FoodItem = ({ id, name, price, description, image }) => {
     </div>
   );
 };
+  );
+};
 
+export default FoodItem;
 export default FoodItem;

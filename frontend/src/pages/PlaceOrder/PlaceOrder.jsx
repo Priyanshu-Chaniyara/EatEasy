@@ -99,10 +99,27 @@ const PlaceOrder = () => {
 
   return (
     <form onSubmit={placeOrder} className="place-order">
+    <form onSubmit={placeOrder} className="place-order">
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
         {/* Delivery information form */}
         <div className="multi-fields">
+          <input
+            required
+            name="firstName"
+            onChange={onChangeHandler}
+            value={data.firstName}
+            type="text"
+            placeholder="First Name"
+          />
+          <input
+            required
+            name="lastName"
+            onChange={onChangeHandler}
+            value={data.lastName}
+            type="text"
+            placeholder="Last Name"
+          />
           <input
             required
             name="firstName"
@@ -153,7 +170,49 @@ const PlaceOrder = () => {
             type="text"
             placeholder="State"
           />
+          <input
+            required
+            name="city"
+            onChange={onChangeHandler}
+            value={data.city}
+            type="text"
+            placeholder="City"
+          />
+          <input
+            required
+            name="state"
+            onChange={onChangeHandler}
+            value={data.state}
+            type="text"
+            placeholder="State"
+          />
         </div>
+        <div className="multi-fields">
+          <input
+            required
+            name="zipcode"
+            onChange={onChangeHandler}
+            value={data.zipcode}
+            type="text"
+            placeholder="Zip Code"
+          />
+          <input
+            required
+            name="country"
+            onChange={onChangeHandler}
+            value={data.country}
+            type="text"
+            placeholder="Country"
+          />
+        </div>
+        <input
+          required
+          name="phone"
+          onChange={onChangeHandler}
+          value={data.phone}
+          type="text"
+          placeholder="Phone"
+        />
         <div className="multi-fields">
           <input
             required
@@ -182,16 +241,22 @@ const PlaceOrder = () => {
         />
       </div>
 
+
       <div className="place-order-right">
+        <div className="cart-total">
         <div className="cart-total">
           <h2>Cart Totals</h2>
           <div>
             <div className="cart-total-details">
+            <div className="cart-total-details">
               <p>Subtotal</p>
+              <p>${getTotalCartAmount()}</p>
               <p>${getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className="cart-total-details">
+              <p>Delivery Fee</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
               <p>Delivery Fee</p>
               <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
@@ -201,8 +266,12 @@ const PlaceOrder = () => {
               <b>
                 ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}
               </b>
+              <b>
+                ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}
+              </b>
             </div>
           </div>
+          <button type="submit">PROCEED TO PAYMENT</button>
           <button type="submit">PROCEED TO PAYMENT</button>
         </div>
       </div>
@@ -221,5 +290,8 @@ const PlaceOrder = () => {
     </form>
   );
 };
+  );
+};
 
+export default PlaceOrder;
 export default PlaceOrder;

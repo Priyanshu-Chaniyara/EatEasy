@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "proxy": "http://localhost:4000",
+  "proxy": "http://localhost:4000",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -27,6 +28,10 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "vite": "^5.2.0"
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",

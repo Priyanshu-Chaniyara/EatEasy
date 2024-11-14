@@ -10,4 +10,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <App />
   </StoreContextProvider>
   </BrowserRouter>
+  <BrowserRouter>
+  <StoreContextProvider>
+  <App />
+  </StoreContextProvider>
+  </BrowserRouter>
 )

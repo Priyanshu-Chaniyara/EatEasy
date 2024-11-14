@@ -10,6 +10,7 @@ function Cart() {
 
   return (
     <div className="cart">
+    <div className="cart">
       <div className="cart-items">
         <div className="cart-items-title">
           <p>Items</p>
@@ -39,7 +40,26 @@ function Cart() {
                   </p>
                 </div>
                 <hr />
+        {food_list.map((item, index) => {
+          if (cartItems[item._id] > 0) {
+            return (
+              <div key={item._id}>
+                <div className="cart-items-title cart-items-item">
+                  <img
+                    src={"http://localhost:4000/images/" + item.image}
+                    alt=""
+                  />
+                  <p>{item.name}</p>
+                  <p>${item.price}</p>
+                  <p>{cartItems[item._id]}</p>
+                  <p>${item.price * cartItems[item._id]}</p>
+                  <p onClick={() => removeFromCart(item._id)} className="cross">
+                    x
+                  </p>
+                </div>
+                <hr />
               </div>
+            );
             );
           }
         })}
@@ -51,9 +71,12 @@ function Cart() {
             <div className="cart-total-details">
               <p>Subtotal</p>
               <p>${getTotalCartAmount()}</p>
+              <p>${getTotalCartAmount()}</p>
             </div>
             <hr />
             <div className="cart-total-details">
+              <p>Delivery Fee</p>
+              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
               <p>Delivery Fee</p>
               <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
             </div>
@@ -63,8 +86,14 @@ function Cart() {
               <b>
                 ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}
               </b>
+              <b>
+                ${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}
+              </b>
             </div>
           </div>
+          <button onClick={() => navigate("/order")}>
+            PROCEED TO CHECKOUT
+          </button>
           <button onClick={() => navigate("/order")}>
             PROCEED TO CHECKOUT
           </button>
@@ -72,7 +101,9 @@ function Cart() {
         <div className="cart-promocode">
           <div>
             <p>If you have a promo code,Enter it here</p>
+            <p>If you have a promo code,Enter it here</p>
             <div className="cart-promocode-input">
+              <input type="text" placeholder="promo code" />
               <input type="text" placeholder="promo code" />
               <button>Submit</button>
             </div>
@@ -81,6 +112,8 @@ function Cart() {
       </div>
     </div>
   );
+  );
 }
 
+export default Cart;
 export default Cart;
