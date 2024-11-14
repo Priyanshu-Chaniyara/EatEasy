@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
   await mongoose
     .connect(
-      "mongodb+srv://priyanshu:9054442111@cluster0.inyvt.mongodb.net/EatEasy"
+      "DATABASE_URL"
     )
     .then(() => console.log("DB connected"));
 };

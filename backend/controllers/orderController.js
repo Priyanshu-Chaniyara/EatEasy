@@ -112,14 +112,14 @@ const placeOrder = async (req, res) => {
       payment_capture: 1, // Auto capture payment
     };
 
-    const razorpayOrder = await razorpayInstance.orders.create(options);
+    // const razorpayOrder = await razorpayInstance.orders.create(options);
 
     res.json({
       success: true,
-      order_id: razorpayOrder.id,
+      // order_id: razorpayOrder.id,
       amount: finalAmount,
       currency: "INR",
-      key_id: process.env.RAZORPAY_KEY_ID,
+      // key_id: process.env.RAZORPAY_KEY_ID,
       name: "Food Delivery App",
       description: "Tasty & Healthy Foods",
       prefill: {

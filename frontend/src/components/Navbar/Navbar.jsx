@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import './Navbar.css'
 import { assets } from '../../assets/assets'
 import { Link, useNavigate } from 'react-router-dom';
-import { StoreContext } from '../../Context/StoreContext';
+import { StoreContext } from '../../context/StoreContext';
 
 const Navbar = ({setShowLogin}) => {
 
@@ -32,7 +32,7 @@ const Navbar = ({setShowLogin}) => {
          <Link to='/cart'><img src={assets.basket_icon} alt=""/></Link>
         <div className={getTotalCartAmount()===0?"":"dot"}></div>
       </div>
-       {!token?<button onClick={()=>setShowLogin(true)}>sign in</button>
+       {!token?<button onClick={()=>setShowLogin(true)}>Sign In</button>
        :<div className='navbar-profile'>
            <img src={assets.profile_icon} alt=""/>
            <ul className='nav-profile-dropdown'>

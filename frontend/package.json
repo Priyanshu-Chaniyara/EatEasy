@@ -11,7 +11,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/runtime": "^7.26.0",
     "axios": "^1.7.2",
+    "braintree-web": "^3.112.0",
+    "braintree-web-drop-in-react": "^1.2.1",
     "dom": "^0.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,6 +25,7 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react-swc": "^3.7.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",

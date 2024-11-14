@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./PlaceOrder.css";
-import { StoreContext } from "../../Context/StoreContext";
+import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import DropIn from "braintree-web-drop-in-react";
 
 const PlaceOrder = () => {
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState(null);
   const { getTotalCartAmount, token, food_list, cartItems, url } =
     useContext(StoreContext);
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     firstName: "",
@@ -21,107 +25,83 @@ const PlaceOrder = () => {
   });
 
   const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((data) => ({ ...data, [name]: value }));
+    const { name, value } = event.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const getToken = async () => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:4000/api/cart/braintree/token`
+      );
+      setClientToken(data?.clientToken);
+    } catch (error) {
+      console.error("Error fetching client token:", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+  }, [token]);
+
+  const handlePayment = async () => {
+    try {
+      const { nonce } = await instance.requestPaymentMethod();
+      await axios.post(`http://localhost:4000/api/cart/braintree/payment`, {
+        nonce,
+        cart: cartItems,
+      });
+      alert("Payment Completed Successfully");
+    } catch (error) {
+      console.error("Payment Error:", error);
+    }
   };
 
   const placeOrder = async (event) => {
     event.preventDefault();
-    let orderItems = [];
-    food_list.map((item) => {
-      if (cartItems[item._id] > 0) {
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItems[item._id];
-        orderItems.push(itemInfo);
-      }
-    });
-    let orderData = {
+    const orderItems = food_list
+      .filter((item) => cartItems[item._id] > 0)
+      .map((item) => ({
+        ...item,
+        quantity: cartItems[item._id],
+      }));
+
+    const orderData = {
       address: data,
       items: orderItems,
       amount: getTotalCartAmount() + 2,
     };
 
-    /* let response=await axios.post(url+"/api/order/place",orderData,{headers:{token}})
-    if(response.data.success){
-      const session_url=response.data;
-      window.location.replace(session_url)
-    }
-    else{
-      alert("Error")
-    }
-   }*/
-
-    /*****/
     try {
-      let response = await axios.post(
-        "http://localhost:4000/api/order/place",
+      const response = await axios.post(
+        `http://localhost:4000/api/order/place`,
         orderData,
-        { headers: { token } }
+        {
+          headers: { token },
+        }
       );
       if (response.data.success) {
-        const {
-          order_id,
-          amount,
-          currency,
-          key_id,
-          name,
-          description,
-          prefill,
-          notes,
-          theme,
-          success_url,
-          cancel_url,
-        } = response.data;
-
-        var options = {
-          key: key_id,
-          amount: amount,
-          currency: currency,
-          name: name,
-          description: description,
-          order_id: order_id,
-          handler: function (response) {
-            window.location.href = success_url;
-          },
-          prefill: {
-            name: prefill.name,
-            email: prefill.email,
-            contact: prefill.contact,
-          },
-          notes: notes,
-          theme: theme,
-        };
-
-        var rzp1 = new Razorpay(options);
-        rzp1.on("payment.failed", function (response) {
-          window.location.href = cancel_url;
-        });
-        rzp1.open();
+        handlePayment();
       } else {
-        alert("Error");
+        alert("Error placing order");
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("Error");
+      console.error("Order Error:", error);
+      alert("Order Error");
     }
-    /****/
   };
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (!token) {
-      navigate("/cart");
-    } else if (getTotalCartAmount() === 0) {
+    if (!token || getTotalCartAmount() === 0) {
       navigate("/cart");
     }
-  }, [token]);
+  }, [token, getTotalCartAmount, navigate]);
 
   return (
     <form onSubmit={placeOrder} className="place-order">
       <div className="place-order-left">
         <p className="title">Delivery Information</p>
+        {/* Delivery information form */}
         <div className="multi-fields">
           <input
             required
@@ -145,7 +125,7 @@ const PlaceOrder = () => {
           name="email"
           onChange={onChangeHandler}
           value={data.email}
-          type="Email"
+          type="email"
           placeholder="Email address"
         />
         <input
@@ -226,6 +206,18 @@ const PlaceOrder = () => {
           <button type="submit">PROCEED TO PAYMENT</button>
         </div>
       </div>
+
+      {!clientToken ? (
+        "Client Token Not Found"
+      ) : (
+        <DropIn
+          options={{
+            authorization: clientToken,
+            paypal: { flow: "vault" },
+          }}
+          onInstance={(instance) => setInstance(instance)}
+        />
+      )}
     </form>
   );
 };
