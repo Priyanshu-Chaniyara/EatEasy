@@ -1,7 +1,6 @@
 import foodModel from "../models/foodModel.js";
 import fs from 'fs';
 
-
 //add food item
 const addFood = async(req,res)=>{
 
@@ -49,8 +48,5 @@ const removeFood=async(req,res)=>{
     res.json({success:false,message:"Error"})
   }
 }
-
-
-
 
 export {addFood,listFood,removeFood}
