@@ -5,7 +5,7 @@
 
 
 ## Overview
-EatEasy is a web-based food ordering platform designed for single restaurants, providing a seamless experience for both customers and administrators. Customers can browse menus, place orders, and track their status in real-time, while admins can manage orders, update statuses, and oversee restaurant operations.
+EatEasy is a web-based food ordering platform designed for single restaurants, providing a seamless experience for both customers and administrators. Customers can browse menus, place orders, and track their status in real-time, while admin can manage orders, update statuses, and oversee restaurant operations.
 
 ## Features
 
